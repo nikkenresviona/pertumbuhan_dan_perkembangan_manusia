@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mengenal Pertumbuhan dan Perkembangan Manusia - IPA Kelas IX</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-radius: 16px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+            color: var(--text-main);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Bar / Header */
+        header {
+            background-color: var(--card-bg);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Main Container */
+        main {
+            flex: 1;
+            position: relative;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: fadeIn 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Common Elements & Buttons */
+        h1, h2, h3 {
+            color: var(--text-main);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+            box-shadow: 0 4px 6px rgba(100, 116, 139, 0.2);
+        }
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-success {
+            background-color: var(--secondary);
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+        }
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
+        /* Footer Navigation inside Page */
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Page 1: Home */
+        .home-content {
+            text-align: center;
+            margin: auto;
+            max-width: 800px;
+        }
+        .home-content h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .home-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        /* Page 2: Learning Objectives (Cards) */
+        .grid-objectives {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .obj-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .obj-card:hover, .obj-card.selected {
+            border-color: var(--primary);
+            background: #eff6ff;
+            transform: translateY(-4px);
+        }
+        .obj-card h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Page 3: Apperception */
+        .apperception-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            text-align: center;
+            margin: auto;
+            max-width: 800px;
+        }
+        .question-box {
+            background: #fef3c7;
+            border-left: 6px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            text-align: left;
+        }
+        .question-box h3 {
+            color: #d97706;
+            margin-bottom: 8px;
+        }
+
+        /* Page 4: Growth vs Development */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 15px;
+        }
+        .comp-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            border-top: 6px solid var(--primary);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .comp-card.dev {
+            border-top-color: var(--secondary);
+        }
+        .comp-card ul {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+        .comp-card li {
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        /* Page 5: Life Stages Timeline */
+        .timeline-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .timeline-node {
+            flex: 1;
+            background: #f1f5f9;
+            border: 3px solid #cbd5e1;
+            padding: 15px 10px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .timeline-node:hover, .timeline-node.active {
+            background: #eff6ff;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        .timeline-node h4 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        .stage-detail-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 10px;
+            min-height: 150px;
+        }
+
+        /* Page 6: Puberty & Myth/Fact */
+        .puberty-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .myth-fact-card {
+            background: #fef2f2;
+            border: 2px dashed #ef4444;
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .myth-fact-card.fact {
+            background: #ecfdf5;
+            border-color: var(--secondary);
+        }
+        .myth-fact-card h4 {
+            margin-bottom: 10px;
+            color: #b91c1c;
+        }
+        .myth-fact-card.fact h4 {
+            color: #047857;
+        }
+
+        /* Page 7: Drag and Drop Activity */
+        .dnd-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .dnd-source-area, .dnd-target-area {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .dnd-item {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            cursor: grab;
+            font-weight: 600;
+            border-left: 5px solid var(--primary);
+        }
+        .dropzone {
+            background: white;
+            border: 2px dashed #94a3b8;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 100px;
+            margin-top: 10px;
+        }
+        .dropzone h4 {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* Page 8: Educational Game */
+        .game-board {
+            text-align: center;
+            max-width: 800px;
+            margin: auto;
+        }
+        .sortable-cards {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+        .sort-card {
+            background: white;
+            border: 2px solid var(--primary);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Page 9: Evaluation Quiz */
+        .quiz-box {
+            max-width: 800px;
+            margin: auto;
+            width: 100%;
+        }
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .option-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 16px 20px;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+        .option-btn.correct {
+            background: #d1fae5;
+            border-color: var(--secondary);
+            color: #065f46;
+        }
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        /* Page 10: Reflection & Summary */
+        .reflection-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+            margin: auto;
+            width: 100%;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 1rem;
+            resize: none;
+            height: 80px;
+        }
+
+        /* Instructions Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: var(--shadow);
+        }
+        .modal-content h3 { margin-bottom: 15px; color: var(--primary); }
+        .modal-content ul { padding-left: 20px; margin-bottom: 20px; }
+        .modal-content li { margin-bottom: 8px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-title">
+            <span>🧬 IPA Kelas IX: Pertumbuhan & Perkembangan</span>
+        </div>
+        <div class="nav-controls">
+            <button class="btn btn-secondary" onclick="openInstructions()">📖 Petunjuk</button>
+            <button class="btn btn-secondary" onclick="goToPage(1)">🏠 Beranda</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- HALAMAN 1: PEMBUKA -->
+        <div class="page active" id="page-1">
+            <div class="home-content">
+                <span class="home-badge">Media Pembelajaran Interaktif Papan Digital</span>
+                <h1>Mengenal Pertumbuhan dan Perkembangan Manusia</h1>
+                <p>Jelajahi perjalanan luar biasa kehidupan manusia dari masa bayi hingga lanjut usia secara ilmiah, interaktif, dan menyenangkan.</p>
+                <div style="margin-top: 40px;">
+                    <button class="btn" style="font-size: 1.3rem; padding: 18px 40px;" onclick="goToPage(2)">Mulai Belajar 🚀</button>
+                </div>
+            </div>
+            <div class="page-footer">
+                <p>Mata Pelajaran: IPA Kelas IX SMP/MTs</p>
+                <p>Alokasi Waktu: 2 × 40 Menit</p>
+            </div>
+        </div>
+
+        <!-- HALAMAN 2: TUJUAN PEMBELAJARAN -->
+        <div class="page" id="page-2">
+            <div>
+                <h2>🎯 Tujuan Pembelajaran</h2>
+                <p>Sentuh setiap kartu di bawah ini untuk melihat rincian tujuan pembelajaran:</p>
+                <div class="grid-objectives">
+                    <div class="obj-card" onclick="toggleCard(this)">
+                        <h3>1. Pengertian</h3>
+                        <p>Menjelaskan pengertian pertumbuhan dan perkembangan manusia secara tepat.</p>
+                    </div>
+                    <div class="obj-card" onclick="toggleCard(this)">
+                        <h3>2. Perbedaan Ciri</h3>
+                        <p>Membedakan konsep pertumbuhan dan perkembangan berdasarkan ciri-cirinya.</p>
+                    </div>
+                    <div class="obj-card" onclick="toggleCard(this)">
+                        <h3>3. Tahapan Hidup</h3>
+                        <p>Mengidentifikasi tahapan kehidupan manusia dari bayi hingga lanjut usia.</p>
+                    </div>
+                    <div class="obj-card" onclick="toggleCard(this)">
+                        <h3>4. Aspek Perubahan</h3>
+                        <p>Menjelaskan perubahan fisik, kognitif, dan sosial-emosional di setiap tahap.</p>
+                    </div>
+                    <div class="obj-card" onclick="toggleCard(this)">
+                        <h3>5. Masa Pubertas</h3>
+                        <p>Memahami masa pubertas sebagai bagian alami dari perkembangan.</p>
+                    </div>
+                    <div class="obj-card" onclick="toggleCard(this)">
+                        <h3>6. Sikap & Kesehatan</h3>
+                        <p>Menunjukkan sikap menghargai perbedaan individu dan menjaga kesehatan diri.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(1)">← Kembali</button>
+                <button class="btn" onclick="goToPage(3)">Lanjut →</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 3: APERSEPSI -->
+        <div class="page" id="page-3">
+            <div>
+                <h2>💡 Apersepsi & Diskusi Kelas</h2>
+                <div class="apperception-box">
+                    <p>Perhatikan gambar dan perubahan yang terjadi pada manusia sejak lahir hingga bertambah usia dewasa.</p>
+                    <div class="question-box">
+                        <h3>Pertanyaan Pemantik Diskusi:</h3>
+                        <p><em>“Apa saja perubahan fisik maupun kemampuan berpikir yang kamu rasakan pada dirimu sendiri dibandingkan saat masih duduk di bangku Sekolah Dasar?”</em></p>
+                    </div>
+                    <p style="font-size: 1rem; color: var(--text-main);">Diskusikan bersama teman sekelas atau guru di depan papan interaktif!</p>
+                </div>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(2)">← Kembali</button>
+                <button class="btn" onclick="goToPage(4)">Lanjut ke Materi →</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 4: MATERI: PERTUMBUHAN & PERKEMBANGAN -->
+        <div class="page" id="page-4">
+            <div>
+                <h2>📖 Pertumbuhan vs Perkembangan</h2>
+                <div class="comparison-container">
+                    <div class="comp-card">
+                        <h3>🌱 Pertumbuhan (Growth)</h3>
+                        <p>Proses bertambahnya ukuran fisik (tinggi, berat, dan volume tubuh) yang bersifat <b>kuantitatif</b> (dapat diukur dengan angka) dan tidak dapat kembali ke ukuran semula (irreversible).</p>
+                        <ul>
+                            <li>Contoh: Bertambahnya tinggi badan dari 145 cm menjadi 160 cm.</li>
+                            <li>Contoh: Peningkatan berat badan seiring bertambahnya usia.</li>
+                        </ul>
+                    </div>
+                    <div class="comp-card dev">
+                        <h3>🧠 Perkembangan (Development)</h3>
+                        <p>Proses pematangan fungsi organ tubuh, kemampuan kognitif, emosional, dan psikomotorik yang bersifat <b>kualitatif</b> (tidak dapat diukur dengan angka secara langsung).</p>
+                        <ul>
+                            <li>Contoh: Kemampuan berbicara, berpikir kritis, dan memecahkan masalah.</li>
+                            <li>Contoh: Kematangan emosi dan kemampuan berinteraksi sosial.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(3)">← Kembali</button>
+                <button class="btn" onclick="goToPage(5)">Lanjut: Tahapan Hidup →</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 5: TAHAPAN KEHIDUPAN MANUSIA -->
+        <div class="page" id="page-5">
+            <div>
+                <h2>⏳ Tahapan Kehidupan Manusia</h2>
+                <p>Sentuh salah satu tahap di bawah ini untuk melihat detail perubahan fisik, kognitif, dan sosial-emosional:</p>
+                
+                <div class="timeline-container">
+                    <div class="timeline-node" onclick="showStage('bayi')">
+                        <h4>👶 Bayi</h4>
+                        <p style="font-size: 0.9rem;">0 - 2 Tahun</p>
+                    </div>
+                    <div class="timeline-node" onclick="showStage('anakanak')">
+                        <h4>🧒 Anak-anak</h4>
+                        <p style="font-size: 0.9rem;">2 - 10 Tahun</p>
+                    </div>
+                    <div class="timeline-node" onclick="showStage('remaja')">
+                        <h4>🧑 Remaja</h4>
+                        <p style="font-size: 0.9rem;">10 - 18 Tahun</p>
+                    </div>
+                    <div class="timeline-node" onclick="showStage('dewasa')">
+                        <h4>👨‍💼 Dewasa</h4>
+                        <p style="font-size: 0.9rem;">18 - 60 Tahun</p>
+                    </div>
+                    <div class="timeline-node" onclick="showStage('lansia')">
+                        <h4>👵 Lansia</h4>
+                        <p style="font-size: 0.9rem;">> 60 Tahun</p>
+                    </div>
+                </div>
+
+                <div class="stage-detail-box" id="stage-detail-content">
+                    <h3 style="color: var(--primary); margin-bottom: 8px;">Silakan pilih salah satu tahap kehidupan di atas.</h3>
+                    <p>Informasi karakteristik fisik, kognitif, dan sosial akan muncul di sini.</p>
+                </div>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(4)">← Kembali</button>
+                <button class="btn" onclick="goToPage(6)">Lanjut: Masa Pubertas →</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 6: MASA PUBERTAS -->
+        <div class="page" id="page-6">
+            <div>
+                <h2>⚡ Masa Pubertas & Kesehatan Diri</h2>
+                <div class="puberty-layout">
+                    <div>
+                        <p><b>Pubertas</b> adalah masa ketika seorang anak mengalami perubahan fisik, hormonal, psikologis, dan pematangan organ reproduksi menuju masa dewasa.</p>
+                        <ul style="margin-top: 15px; padding-left: 20px;">
+                            <li><b>Perubahan Fisik:</b> Pertumbuhan tinggi yang cepat, perubahan suara (pada laki-laki), perkembangan otot atau payudara, serta aktifnya kelenjar keringat.</li>
+                            <li><b>Perubahan Emosi & Sosial:</b> Mulai mencari identitas diri, lebih peka secara emosional, dan memiliki ketertarikan sosial yang lebih luas.</li>
+                            <li><b>Tips Menjaga Kesehatan:</b> Menjaga kebersihan diri secara rutin, mengonsumsi makanan bergizi seimbang, istirahat cukup, dan mengelola stres dengan baik.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 12px; font-size: 1.2rem;">🔍 Mitos atau Fakta? (Sentuh untuk buka)</h3>
+                        <div class="myth-fact-card" onclick="revealMyth(this, 'Fakta! Setiap individu memiliki waktu dan kecepatan pubertas yang bervariasi secara genetik dan biologis.')">
+                            <h4>Mitos/Fakta 1: Semua remaja mengalami pubertas pada usia yang persis sama.</h4>
+                            <p style="font-size: 0.95rem; font-style: italic;">(Sentuh untuk melihat penjelasan ilmiah)</p>
+                        </div>
+                        <div style="height: 15px;"></div>
+                        <div class="myth-fact-card fact" onclick="revealMyth(this, 'Fakta! Perubahan keringat dan aktivitas kelenjar minyak meningkat, sehingga kebersihan tubuh harus lebih dijaga.')">
+                            <h4>Mitos/Fakta 2: Kebersihan tubuh sangat penting dijaga selama masa pubertas.</h4>
+                            <p style="font-size: 0.95rem; font-style: italic;">(Sentuh untuk melihat penjelasan ilmiah)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(5)">← Kembali</button>
+                <button class="btn" onclick="goToPage(7)">Lanjut: Aktivitas Interaktif →</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 7: AKTIVITAS KLASIFIKASI -->
+        <div class="page" id="page-7">
+            <div>
+                <h2>🧩 Aktivitas Klasifikasi Konsep</h2>
+                <p>Pilih kategori yang tepat untuk setiap contoh perubahan di bawah ini:</p>
+                <div class="dnd-container">
+                    <div class="dnd-source-area">
+                        <h4 style="color: var(--primary);">Daftar Contoh Perubahan:</h4>
+                        <div class="dnd-item" onclick="selectItem(this, 'pertumbuhan')">Bertambah tinggi badan dari 140 cm menjadi 160 cm</div>
+                        <div class="dnd-item" onclick="selectItem(this, 'perkembangan')">Mampu berpikir kritis dan menyelesaikan soal matematika rumit</div>
+                        <div class="dnd-item" onclick="selectItem(this, 'pubertas')">Tumbuhnya rambut halus di area tertentu dan perubahan suara</div>
+                    </div>
+                    <div class="dnd-target-area">
+                        <h4 style="color: var(--secondary);">Kotak Jawaban Aktif:</h4>
+                        <p id="feedback-classification" style="font-size: 1rem; color: var(--text-main);">Silakan sentuh salah satu contoh di sebelah kiri, lalu pilih kategorinya di bawah:</p>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button class="btn btn-success" onclick="checkClassification('pertumbuhan')">Pertumbuhan</button>
+                            <button class="btn btn-success" onclick="checkClassification('perkembangan')">Perkembangan</button>
+                            <button class="btn btn-success" onclick="checkClassification('pubertas')">Pubertas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(6)">← Kembali</button>
+                <button class="btn" onclick="goToPage(8)">Lanjut: Permainan Edukatif →</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 8: PERMAINAN EDUKATIF -->
+        <div class="page" id="page-8">
+            <div class="game-board">
+                <h2>🎮 Susun Tahapan Kehidupan Manusia</h2>
+                <p>Susun urutan tahap kehidupan manusia dari yang paling awal hingga akhir dengan menyentuh kartu secara berurutan:</p>
+                
+                <div id="game-score" style="font-weight: bold; color: var(--secondary); font-size: 1.2rem; margin: 15px 0;">Skor: 0</div>
+                
+                <div class="sortable-cards" id="shuffled-cards">
+                    <!-- Cards will be generated by JS -->
+                </div>
+                <p id="game-message" style="font-weight: 600; color: var(--primary); min-height: 30px;"></p>
+                <button class="btn btn-secondary" style="margin-top: 15px;" onclick="initGame()">Ulangi Permainan</button>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(7)">← Kembali</button>
+                <button class="btn" onclick="goToPage(9)">Lanjut: Kuis Evaluasi →</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 9: KUIS EVALUASI -->
+        <div class="page" id="page-9">
+            <div class="quiz-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="margin: 0;">📝 Kuis Evaluasi Pembelajaran</h2>
+                    <span id="quiz-counter" style="font-weight: bold; color: var(--primary);">Soal 1 dari 5</span>
+                </div>
+                <div id="quiz-container">
+                    <!-- Quiz dynamic content -->
+                </div>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(8)">← Kembali</button>
+                <button class="btn" id="quiz-next-btn" onclick="nextQuizQuestion()" style="display: none;">Soal Berikutnya →</button>
+            </div>
+        </div>
+
+        <!-- HALAMAN 10: REFLEKSI DAN KESIMPULAN -->
+        <div class="page" id="page-10">
+            <div class="reflection-box">
+                <h2>🌟 Refleksi dan Kesimpulan</h2>
+                <p><b>Kesimpulan:</b> Pertumbuhan (perubahan ukuran fisik) dan perkembangan (pematangan fungsi psikis dan organ) berjalan beriringan secara unik pada setiap individu.</p>
+                
+                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                    <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 10px;">Exit Ticket (Refleksi Singkat):</h3>
+                    <label style="font-size: 0.95rem; color: var(--text-muted);">1. Apa pengetahuan baru yang paling berkesan bagi kamu hari ini?</label>
+                    <textarea placeholder="Tuliskan jawaban singkatmu di sini..."></textarea>
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <button class="btn btn-success" onclick="alert('Terima kasih! Refleksi Anda telah terekam dalam sesi pembelajaran.')">Kirim Refleksi 🎉</button>
+                </div>
+            </div>
+            <div class="page-footer">
+                <button class="btn btn-secondary" onclick="goToPage(9)">← Kembali</button>
+                <button class="btn" onclick="goToPage(1)">Kembali ke Beranda 🏠</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Instructions Modal -->
+    <div class="modal" id="instructionsModal">
+        <div class="modal-content">
+            <h3>📖 Petunjuk Penggunaan Media</h3>
+            <ul>
+                <li>Gunakan sentuhan jari atau pena digital pada papan interaktif.</li>
+                <li>Gunakan tombol navigasi <b>Lanjut</b> dan <b>Kembali</b> di bagian bawah setiap halaman.</li>
+                <li>Ikuti setiap instruksi interaktif pada halaman materi, kuis, dan permainan edukatif.</li>
+                <li>Ajak peserta didik berdiskusi secara aktif pada sesi apersepsi dan refleksi kelas.</li>
+            </ul>
+            <button class="btn" onclick="closeInstructions()">Mengerti, Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // Navigation Logic
+        let currentPage = 1;
+        const totalPages = 10;
+
+        function goToPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${pageNum}`).classList.add('active');
+            currentPage = pageNum;
+            if(pageNum === 8) initGame();
+            if(pageNum === 9) loadQuizQuestion();
+        }
+
+        // Instructions Modal
+        function openInstructions() { document.getElementById('instructionsModal').style.display = 'flex'; }
+        function closeInstructions() { document.getElementById('instructionsModal').style.display = 'none'; }
+
+        // Page 2: Objective cards toggle
+        function toggleCard(card) {
+            card.classList.toggle('selected');
+        }
+
+        // Page 5: Stage details
+        const stagesData = {
+            bayi: { title: "Masa Bayi (0 - 2 Tahun)", text: "Fisik tumbuh sangat cepat, motorik kasar mulai berkembang (belajar merangkak, berjalan), serta mulai mengenali suara dan orang sekitar." },
+            anakanak: { title: "Masa Anak-anak (2 - 10 Tahun)", text: "Keterampilan motorik halus dan kasar semakin matang, kemampuan berbahasa berkembang pesat, mulai bersosialisasi di lingkungan sekolah dasar." },
+            remaja: { title: "Masa Remaja (10 - 18 Tahun)", text: "Mengalami masa pubertas, terjadi lonjakan pertumbuhan fisik, pematangan organ reproduksi, serta perkembangan emosi dan pencarian identitas diri." },
+            dewasa: { title: "Masa Dewasa (18 - 60 Tahun)", text: "Fisik mencapai puncak kekuatan dan kematangan penuh, mampu bertanggung jawab secara mandiri, sosial, dan ekonomi." },
+            lansia: { title: "Masa Lanjut Usia (> 60 Tahun)", text: "Fungsi fisiologis dan organ tubuh mulai mengalami penurunan secara alami, memerlukan dukungan kesehatan serta perhatian khusus." }
+        };
+
+        function showStage(stageKey) {
+            document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            const data = stagesData[stageKey];
+            document.getElementById('stage-detail-content').innerHTML = `
+                <h3 style="color: var(--primary); margin-bottom: 8px;">${data.title}</h3>
+                <p>${data.text}</p>
+            `;
+        }
+
+        // Page 6: Myth / Fact reveal
+        function revealMyth(card, explanation) {
+            card.style.background = '#e0f2fe';
+            card.style.borderColor = '#2563eb';
+            card.innerHTML += `<p style="margin-top: 10px; color: var(--primary); font-weight: 600;">💡 Penjelasan: ${explanation}</p>`;
+        }
+
+        // Page 7: Classification Activity
+        let selectedItemElem = null;
+        function selectItem(elem, category) {
+            document.querySelectorAll('.dnd-item').forEach(i => i.style.borderColor = 'var(--primary)');
+            elem.style.borderColor = 'var(--accent)';
+            selectedItemElem = { elem, category };
+            document.getElementById('feedback-classification').innerText = `Terpilih: "${elem.innerText}". Silakan pilih tombol kategori yang sesuai di bawah!`;
+        }
+
+        function checkClassification(chosenCategory) {
+            if(!selectedItemElem) {
+                alert('Silakan pilih salah satu contoh perubahan di sebelah kiri terlebih dahulu.');
+                return;
+            }
+            if(selectedItemElem.category === chosenCategory) {
+                document.getElementById('feedback-classification').innerHTML = `<span style="color: var(--secondary); font-weight: bold;">✅ Benar! Kategori tersebut tepat.</span>`;
+                selectedItemElem.elem.style.opacity = '0.5';
+                selectedItemElem = null;
+            } else {
+                document.getElementById('feedback-classification').innerHTML = `<span style="color: #ef4444; font-weight: bold;">❌ Kurang tepat. Coba perhatikan kembali ciri-cirinya.</span>`;
+            }
+        }
+
+        // Page 8: Educational Game
+        const stagesOrder = [
+            { id: 1, name: "1. Bayi" },
+            { id: 2, name: "2. Anak-anak" },
+            { id: 3, name: "3. Remaja" },
+            { id: 4, name: "4. Dewasa" },
+            { id: 5, name: "5. Lansia" }
+        ];
+        let gameScore = 0;
+        let expectedNextIndex = 0;
+
+        function initGame() {
+            gameScore = 0;
+            expectedNextIndex = 0;
+            document.getElementById('game-score').innerText = `Skor: ${gameScore}`;
+            document.getElementById('game-message').innerText = "Sentuh kartu tahap kehidupan sesuai urutan dari awal (1) hingga akhir (5).";
+            
+            const container = document.getElementById('shuffled-cards');
+            container.innerHTML = '';
+            let shuffled = [...stagesOrder].sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'sort-card';
+                card.innerText = item.name;
+                card.dataset.id = item.id;
+                card.onclick = () => handleGameCardClick(card, item.id);
+                container.appendChild(card);
+            });
+        }
+
+        function handleGameCardClick(card, id) {
+            if (id === stagesOrder[expectedNextIndex].id) {
+                card.style.background = '#d1fae5';
+                card.style.borderColor = 'var(--secondary)';
+                card.style.pointerEvents = 'none';
+                gameScore += 20;
+                expectedNextIndex++;
+                document.getElementById('game-score').innerText = `Skor: ${gameScore}`;
+                if (expectedNextIndex === stagesOrder.length) {
+                    document.getElementById('game-message').innerText = "🎉 Luar Biasa! Kamu berhasil menyusun seluruh tahapan dengan benar!";
+                } else {
+                    document.getElementById('game-message').innerText = "✅ Benar! Lanjutkan ke tahap berikutnya.";
+                }
+            } else {
+                document.getElementById('game-message').innerText = "❌ Urutan belum tepat. Coba ingat kembali urutan tahapan kehidupan!";
+            }
+        }
+
+        // Page 9: Evaluation Quiz Data
+        const quizData = [
+            {
+                q: "Proses bertambahnya ukuran fisik makhluk hidup seperti tinggi dan berat badan yang bersifat kuantitatif disebut...",
+                options: ["Perkembangan", "Pertumbuhan", "Pubertas", "Metamorfosis"],
+                answer: 1,
+                explanation: "Pertumbuhan adalah pertambahan ukuran fisik yang dapat diukur secara kuantitatif."
+            },
+            {
+                q: "Contoh dari proses perkembangan (development) pada manusia adalah...",
+                options: ["Bertambahnya tinggi badan 5 cm", "Meningkatnya berat massa otot", "Kemampuan berbicara dan berpikir kritis", "Pertambahan panjang tulang"],
+                answer: 2,
+                explanation: "Perkembangan berkaitan dengan pematangan fungsi organ, kognitif, dan kemampuan psikologis."
+            },
+            {
+                q: "Tahapan kehidupan manusia di mana seseorang mengalami masa pubertas dan pencarian identitas diri adalah...",
+                options: ["Masa Bayi", "Masa Anak-anak", "Masa Remaja", "Masa Lansia"],
+                answer: 2,
+                explanation: "Masa remaja (10-18 tahun) adalah fase pubertas dan pencarian identitas diri."
+            },
+            {
+                q: "Manakah pernyataan yang paling tepat mengenai masa pubertas?",
+                options: ["Semua anak mengalami pubertas pada usia yang persis sama", "Pubertas adalah bagian alami dari proses pertumbuhan dan perkembangan", "Perubahan pubertas hanya terjadi pada aspek fisik luar saja", "Pubertas terjadi pada masa lansia"],
+                answer: 1,
+                explanation: "Pubertas adalah proses alami pematangan fisik dan reproduksi setiap manusia."
+            },
+            {
+                q: "Sikap yang tepat dalam menyadari perbedaan kecepatan pertumbuhan dan perkembangan antarindividu adalah...",
+                options: ["Saling membandingkan dan mengejek", "Menghargai perbedaan dan menjaga kesehatan diri", "Mengabaikan kesehatan fisik", "Merasa paling unggul"],
+                answer: 1,
+                explanation: "Setiap individu unik dan berkembang dengan kecepatan bervariasi, sehingga kita harus saling menghargai."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        function loadQuizQuestion() {
+            if(currentQuizIndex >= quizData.length) {
+                document.getElementById('quiz-container').innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <h3>🎉 Kuis Selesai!</h3>
+                        <p style="font-size: 1.3rem; margin: 15px 0;">Skor Akhir Anda: <b>${quizScore} / ${quizData.length * 20}</b></p>
+                        <p>Kerja bagus! Silakan lanjutkan ke halaman refleksi.</p>
+                        <button class="btn" style="margin-top: 15px;" onclick="resetQuiz()">Ulangi Kuis</button>
+                    </div>
+                `;
+                document.getElementById('quiz-counter').innerText = "Selesai";
+                document.getElementById('quiz-next-btn').style.display = 'none';
+                return;
+            }
+
+            const qData = quizData[currentQuizIndex];
+            document.getElementById('quiz-counter').innerText = `Soal ${currentQuizIndex + 1} dari ${quizData.length}`;
+            
+            let html = `<p style="font-size: 1.15rem; font-weight: 600; margin-bottom: 20px; color: var(--text-main);">${qData.q}</p><div class="options-list">`;
+            qData.options.forEach((opt, idx) => {
+                html += `<button class="option-btn" onclick="selectQuizOption(this, ${idx}, ${qData.answer}, '${qData.explanation}')">${opt}</button>`;
+            });
+            html += `</div><p id="quiz-explanation" style="margin-top: 15px; font-weight: 600; min-height: 25px;"></p>`;
+            
+            document.getElementById('quiz-container').innerHTML = html;
+            document.getElementById('quiz-next-btn').style.display = 'none';
+        }
+
+        function selectQuizOption(btn, selectedIdx, correctIdx, explanation) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+            if(selectedIdx === correctIdx) {
+                btn.classList.add('correct');
+                quizScore += 20;
+                document.getElementById('quiz-explanation').innerHTML = `<span style="color: var(--secondary);">✅ Benar! ${explanation}</span>`;
+            } else {
+                btn.classList.add('incorrect');
+                allBtns[correctIdx].classList.add('correct');
+                document.getElementById('quiz-explanation').innerHTML = `<span style="color: #ef4444;">❌ Kurang tepat. ${explanation}</span>`;
+            }
+            document.getElementById('quiz-next-btn').style.display = 'inline-flex';
+        }
+
+        function nextQuizQuestion() {
+            currentQuizIndex++;
+            loadQuizQuestion();
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            loadQuizQuestion();
+        }
+    </script>
+</body>
+</html>
